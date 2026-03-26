@@ -1,0 +1,656 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Revisor Jurídico Profissional</title>
+  <style>
+    :root {
+      --bg: #f4f7fb;
+      --card: #ffffff;
+      --text: #142033;
+      --muted: #61708a;
+      --primary: #1f5eff;
+      --primary-soft: #e8efff;
+      --border: #dce4f0;
+      --shadow: 0 10px 30px rgba(20, 32, 51, 0.08);
+      --radius: 18px;
+      --success: #149c5a;
+      --warning: #ffb020;
+    }
+
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+    }
+
+    .container {
+      max-width: 1240px;
+      margin: 0 auto;
+      padding: 24px;
+    }
+
+    .header {
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      align-items: flex-start;
+      flex-wrap: wrap;
+      margin-bottom: 22px;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: 34px;
+      line-height: 1.1;
+    }
+
+    .subtitle {
+      margin-top: 8px;
+      color: var(--muted);
+      font-size: 15px;
+      max-width: 760px;
+    }
+
+    .badge {
+      background: var(--primary-soft);
+      color: var(--primary);
+      padding: 10px 14px;
+      border-radius: 999px;
+      font-size: 13px;
+      font-weight: bold;
+      white-space: nowrap;
+    }
+
+    .layout {
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 20px;
+    }
+
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 20px;
+    }
+
+    .card-title {
+      margin: 0 0 14px;
+      font-size: 22px;
+    }
+
+    .controls {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+
+    label {
+      display: block;
+      font-size: 13px;
+      color: var(--muted);
+      margin-bottom: 6px;
+    }
+
+    select, textarea, input, button {
+      font: inherit;
+    }
+
+    select, textarea, input {
+      width: 100%;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 12px 14px;
+      background: #fff;
+    }
+
+    textarea {
+      min-height: 360px;
+      resize: vertical;
+      line-height: 1.55;
+    }
+
+    .button-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 14px;
+    }
+
+    button {
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 12px 14px;
+      cursor: pointer;
+      font-weight: bold;
+      background: white;
+      color: var(--text);
+    }
+
+    .btn-primary {
+      background: var(--primary);
+      border-color: var(--primary);
+      color: white;
+    }
+
+    .btn-success {
+      background: #eefaf3;
+      border-color: #cfeedd;
+      color: var(--success);
+    }
+
+    .btn-secondary {
+      background: #f8fbff;
+    }
+
+    .helper {
+      margin-top: 10px;
+      font-size: 13px;
+      color: var(--muted);
+      line-height: 1.45;
+    }
+
+    .tabs {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 14px;
+    }
+
+    .tab-btn.active {
+      background: var(--primary);
+      color: white;
+      border-color: var(--primary);
+    }
+
+    .tab-content { display: none; }
+    .tab-content.active { display: block; }
+
+    .output-box {
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 16px;
+      background: #fff;
+      min-height: 470px;
+      white-space: pre-wrap;
+      line-height: 1.6;
+    }
+
+    .score-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+      margin-bottom: 14px;
+    }
+
+    .score-item {
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 14px;
+      background: #fff;
+    }
+
+    .score-label {
+      font-size: 13px;
+      color: var(--muted);
+      margin-bottom: 6px;
+    }
+
+    .score-value {
+      font-size: 26px;
+      font-weight: bold;
+    }
+
+    .list {
+      display: grid;
+      gap: 10px;
+    }
+
+    .list-item {
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 12px 14px;
+      background: #fff;
+      line-height: 1.5;
+    }
+
+    .status {
+      font-size: 13px;
+      color: var(--muted);
+      margin-bottom: 12px;
+    }
+
+    .small {
+      font-size: 13px;
+      color: var(--muted);
+    }
+
+    .pill-row {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-bottom: 12px;
+    }
+
+    .pill {
+      display: inline-block;
+      padding: 7px 10px;
+      border-radius: 999px;
+      background: #f1f4f8;
+      color: #42526b;
+      font-size: 12px;
+      font-weight: bold;
+    }
+
+    @media (max-width: 980px) {
+      .layout { grid-template-columns: 1fr; }
+      .controls { grid-template-columns: 1fr; }
+      .score-grid { grid-template-columns: 1fr 1fr; }
+    }
+
+    @media (max-width: 640px) {
+      .container { padding: 16px; }
+      h1 { font-size: 28px; }
+      .score-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <div>
+        <h1>Revisor Jurídico Profissional</h1>
+        <div class="subtitle">Cole seu texto de trabalho, receba feedback técnico e veja uma versão melhorada sem perder sua estrutura, sua ordem e sua ideia original. Aqui a ferramenta lapida; não inventa moda.</div>
+      </div>
+      <div class="badge">Foco: clareza + formalidade + fidelidade ao original</div>
+    </div>
+
+    <div class="layout">
+      <div class="card">
+        <h2 class="card-title">Texto original</h2>
+        <div class="controls">
+          <div>
+            <label for="docType">Tipo de texto</label>
+            <select id="docType">
+              <option>Parecer</option>
+              <option>Ofício</option>
+              <option>Notificação</option>
+              <option>Manifestação</option>
+              <option>Resposta administrativa</option>
+              <option>E-mail formal</option>
+              <option>Relatório</option>
+              <option>Contrato / minuta</option>
+              <option>Outro</option>
+            </select>
+          </div>
+          <div>
+            <label for="level">Nível de intervenção</label>
+            <select id="level">
+              <option value="leve">Leve</option>
+              <option value="moderada" selected>Moderada</option>
+              <option value="juridica">Jurídica</option>
+              <option value="fiel">Muito fiel ao original</option>
+            </select>
+          </div>
+          <div>
+            <label for="tone">Tom</label>
+            <select id="tone">
+              <option value="formal">Formal</option>
+              <option value="tecnico" selected>Técnico-jurídico</option>
+              <option value="objetivo">Objetivo</option>
+            </select>
+          </div>
+        </div>
+
+        <textarea id="inputText" placeholder="Cole aqui o texto que você quer revisar.\n\nEx.: ofício, resposta administrativa, parecer, notificação, manifestação...\n\nO sistema vai: \n1) apontar problemas de clareza, coesão, formalidade, pontuação e gramática;\n2) devolver uma versão melhorada sem mudar a estrutura nem a ideia central."></textarea>
+
+        <div class="button-row">
+          <button class="btn-primary" id="analyzeBtn">Analisar e melhorar</button>
+          <button class="btn-success" id="copyRevisedBtn">Copiar versão revisada</button>
+          <button class="btn-secondary" id="clearBtn">Limpar</button>
+        </div>
+
+        <div class="helper">Regra central do projeto: preservar a estrutura, a ordem dos argumentos e a ideia original do seu texto. O ajuste entra no português, na clareza, na coesão e na formalidade.</div>
+      </div>
+
+      <div class="card">
+        <div class="tabs">
+          <button class="tab-btn active" data-tab="feedback">Feedback</button>
+          <button class="tab-btn" data-tab="revised">Versão revisada</button>
+          <button class="tab-btn" data-tab="ajustes">Ajustes</button>
+          <button class="tab-btn" data-tab="vicios">Seus padrões</button>
+        </div>
+
+        <div class="tab-content active" id="tab-feedback">
+          <div class="status" id="statusText">Cole um texto e clique em “Analisar e melhorar”.</div>
+          <div class="score-grid">
+            <div class="score-item">
+              <div class="score-label">Clareza</div>
+              <div class="score-value" id="clarityScore">—</div>
+            </div>
+            <div class="score-item">
+              <div class="score-label">Formalidade</div>
+              <div class="score-value" id="formalityScore">—</div>
+            </div>
+            <div class="score-item">
+              <div class="score-label">Coesão</div>
+              <div class="score-value" id="cohesionScore">—</div>
+            </div>
+            <div class="score-item">
+              <div class="score-label">Nota geral</div>
+              <div class="score-value" id="overallScore">—</div>
+            </div>
+          </div>
+          <div class="list" id="feedbackList">
+            <div class="list-item">Nenhum feedback ainda.</div>
+          </div>
+        </div>
+
+        <div class="tab-content" id="tab-revised">
+          <div class="pill-row" id="revisedPills">
+            <span class="pill">Preservar estrutura</span>
+            <span class="pill">Preservar ideia</span>
+            <span class="pill">Melhorar português</span>
+          </div>
+          <div class="output-box" id="revisedText">Sua versão revisada vai aparecer aqui.</div>
+        </div>
+
+        <div class="tab-content" id="tab-ajustes">
+          <div class="list" id="adjustmentsList">
+            <div class="list-item">Os ajustes realizados aparecerão aqui.</div>
+          </div>
+        </div>
+
+        <div class="tab-content" id="tab-vicios">
+          <div class="small" style="margin-bottom:12px;">Esse quadro acumula padrões recorrentes percebidos nos textos analisados neste navegador.</div>
+          <div class="list" id="patternsList">
+            <div class="list-item">Nenhum padrão registrado ainda.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const inputText = document.getElementById('inputText');
+    const analyzeBtn = document.getElementById('analyzeBtn');
+    const clearBtn = document.getElementById('clearBtn');
+    const copyRevisedBtn = document.getElementById('copyRevisedBtn');
+    const feedbackList = document.getElementById('feedbackList');
+    const revisedText = document.getElementById('revisedText');
+    const adjustmentsList = document.getElementById('adjustmentsList');
+    const patternsList = document.getElementById('patternsList');
+    const statusText = document.getElementById('statusText');
+
+    const clarityScore = document.getElementById('clarityScore');
+    const formalityScore = document.getElementById('formalityScore');
+    const cohesionScore = document.getElementById('cohesionScore');
+    const overallScore = document.getElementById('overallScore');
+
+    function loadPatterns() {
+      try {
+        return JSON.parse(localStorage.getItem('revisorPadroesJuridicos')) || {};
+      } catch (e) {
+        return {};
+      }
+    }
+
+    function savePatterns(patterns) {
+      localStorage.setItem('revisorPadroesJuridicos', JSON.stringify(patterns));
+    }
+
+    function addPattern(name) {
+      const patterns = loadPatterns();
+      patterns[name] = (patterns[name] || 0) + 1;
+      savePatterns(patterns);
+      renderPatterns();
+    }
+
+    function renderPatterns() {
+      const patterns = loadPatterns();
+      const entries = Object.entries(patterns).sort((a, b) => b[1] - a[1]);
+      if (!entries.length) {
+        patternsList.innerHTML = '<div class="list-item">Nenhum padrão registrado ainda.</div>';
+        return;
+      }
+      patternsList.innerHTML = entries.map(([name, count]) => `
+        <div class="list-item"><strong>${name}</strong><br><span class="small">Apareceu ${count} vez(es)</span></div>
+      `).join('');
+    }
+
+    function escapeHtml(str) {
+      return str
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;');
+    }
+
+    function scoreFromText(text) {
+      const sentences = text.split(/[.!?]+/).map(s => s.trim()).filter(Boolean);
+      const words = text.trim().split(/\s+/).filter(Boolean);
+      const avgSentence = sentences.length ? words.length / sentences.length : 0;
+      const commas = (text.match(/,/g) || []).length;
+      const repeatedNesse = (text.match(/nesse sentido/gi) || []).length;
+      const repeatedAssim = (text.match(/assim/gi) || []).length;
+      const repeatedDessaForma = (text.match(/dessa forma/gi) || []).length;
+
+      let clarity = 9;
+      let formality = 9;
+      let cohesion = 9;
+
+      if (avgSentence > 28) clarity -= 2;
+      else if (avgSentence > 22) clarity -= 1;
+
+      if (commas > sentences.length * 2) clarity -= 1;
+      if (/vc\b|pra\b|tá\b|ok\b|tipo\b/gi.test(text)) formality -= 3;
+      if (/muito bom|beleza|acho que|a gente/gi.test(text)) formality -= 2;
+      if (repeatedNesse + repeatedAssim + repeatedDessaForma >= 3) cohesion -= 2;
+      if (/\.{3,}/.test(text)) formality -= 1;
+      if (/\s{2,}/.test(text)) clarity -= 1;
+      if (/\bque\b(?:\s+\bque\b)+/gi.test(text)) cohesion -= 1;
+
+      clarity = Math.max(5, clarity);
+      formality = Math.max(4, formality);
+      cohesion = Math.max(5, cohesion);
+      const overall = ((clarity + formality + cohesion) / 3).toFixed(1);
+
+      return { clarity, formality, cohesion, overall };
+    }
+
+    function improveParagraph(paragraph, level, tone) {
+      let p = paragraph;
+      const adjustments = [];
+
+      const replacements = [
+        [/\bPra\b/g, 'Para'],
+        [/\bpra\b/g, 'para'],
+        [/\bvc\b/gi, 'você'],
+        [/\btá\b/gi, 'está'],
+        [/\bné\b/gi, ''],
+        [/\bok\b/gi, 'adequado'],
+        [/\bbeleza\b/gi, 'adequado'],
+        [/\ba gente\b/gi, 'nós'],
+        [/\btem que\b/gi, 'deve'],
+        [/\bpor conta disso\b/gi, 'em razão disso'],
+        [/\bnesse caso\b/gi, 'nesse contexto'],
+        [/\bdaí\b/gi, 'assim'],
+      ];
+
+      replacements.forEach(([pattern, rep]) => {
+        if (pattern.test(p)) {
+          p = p.replace(pattern, rep);
+          adjustments.push('Ajuste de registro linguístico para maior formalidade.');
+        }
+      });
+
+      if (/\s{2,}/.test(p)) {
+        p = p.replace(/\s{2,}/g, ' ');
+        adjustments.push('Remoção de espaços desnecessários.');
+      }
+
+      if (/\.\.\./.test(p)) {
+        p = p.replace(/\.\.\./g, '.');
+        adjustments.push('Substituição de reticências por pontuação mais objetiva.');
+      }
+
+      p = p.replace(/ ,/g, ',').replace(/ \./g, '.').replace(/ ;/g, ';').replace(/ :/g, ':');
+
+      if (/nesse sentido/gi.test(p) && (p.match(/nesse sentido/gi) || []).length > 1) {
+        let count = 0;
+        p = p.replace(/nesse sentido/gi, () => {
+          count++;
+          return count === 1 ? 'nesse sentido' : 'assim';
+        });
+        adjustments.push('Redução de repetição de conectivos.');
+      }
+
+      if (/dessa forma/gi.test(p) && (p.match(/dessa forma/gi) || []).length > 1) {
+        let count = 0;
+        p = p.replace(/dessa forma/gi, () => {
+          count++;
+          return count === 1 ? 'dessa forma' : 'desse modo';
+        });
+        adjustments.push('Variação de conectivos repetidos.');
+      }
+
+      if (tone === 'objetivo') {
+        p = p.replace(/cumpre salientar que/gi, 'cumpre salientar:');
+        p = p.replace(/vale destacar que/gi, 'vale destacar:');
+      }
+
+      if (tone === 'tecnico') {
+        p = p.replace(/é importante destacar que/gi, 'cumpre destacar que');
+        p = p.replace(/é importante ressaltar que/gi, 'cumpre ressaltar que');
+        p = p.replace(/deve ser observado que/gi, 'deve-se observar que');
+      }
+
+      if (level === 'fiel') {
+        return { text: p, adjustments: [...new Set(adjustments)].slice(0, 2) };
+      }
+
+      // Quebra leve de períodos longos, sem alterar estrutura do parágrafo
+      const words = p.split(/\s+/);
+      if (words.length > 42 && p.includes(',')) {
+        p = p.replace(/,\s+(sendo que|de modo que|de forma que|pois|uma vez que)\s+/i, '. $1 ');
+        adjustments.push('Suavização de período excessivamente longo.');
+      }
+
+      if (level === 'juridica') {
+        p = p.replace(/é necessário/gi, 'mostra-se necessário');
+        p = p.replace(/é possível observar/gi, 'é possível verificar');
+        p = p.replace(/fica claro/gi, 'resta evidenciado');
+        adjustments.push('Refino pontual da linguagem técnico-jurídica.');
+      }
+
+      return { text: p, adjustments: [...new Set(adjustments)] };
+    }
+
+    function analyzeText() {
+      const text = inputText.value.trim();
+      if (!text) {
+        statusText.textContent = 'Cole um texto antes de analisar.';
+        return;
+      }
+
+      const level = document.getElementById('level').value;
+      const tone = document.getElementById('tone').value;
+      const docType = document.getElementById('docType').value;
+
+      const scores = scoreFromText(text);
+      clarityScore.textContent = scores.clarity.toFixed(1);
+      formalityScore.textContent = scores.formality.toFixed(1);
+      cohesionScore.textContent = scores.cohesion.toFixed(1);
+      overallScore.textContent = scores.overall;
+
+      const paragraphs = text.split(/\n{2,}/);
+      const revisedParagraphs = [];
+      const allAdjustments = [];
+      const feedback = [];
+
+      const sentences = text.split(/[.!?]+/).map(s => s.trim()).filter(Boolean);
+      const words = text.split(/\s+/).filter(Boolean);
+      const avgSentence = sentences.length ? words.length / sentences.length : 0;
+
+      if (avgSentence > 24) {
+        feedback.push('Há períodos longos demais, o que pode reduzir clareza e força argumentativa.');
+        addPattern('Períodos excessivamente longos');
+      }
+      if (/vc\b|pra\b|tá\b|ok\b|beleza\b/gi.test(text)) {
+        feedback.push('Há marcas de linguagem coloquial que prejudicam a formalidade profissional.');
+        addPattern('Linguagem coloquial em texto profissional');
+      }
+      if ((text.match(/nesse sentido/gi) || []).length >= 2 || (text.match(/dessa forma/gi) || []).length >= 2) {
+        feedback.push('Há repetição de conectivos, o que deixa a leitura menos fluida.');
+        addPattern('Repetição de conectivos');
+      }
+      if (/\.\.\./.test(text)) {
+        feedback.push('O uso de reticências enfraquece a objetividade do texto jurídico ou administrativo.');
+        addPattern('Uso de reticências');
+      }
+      if (/\s{2,}/.test(text)) {
+        feedback.push('Existem espaços ou quebras desnecessárias que afetam o acabamento do texto.');
+        addPattern('Acabamento textual irregular');
+      }
+      if (!feedback.length) {
+        feedback.push('O texto está com boa base. Os ajustes necessários são mais de lapidação do que de reconstrução.');
+      }
+
+      paragraphs.forEach(paragraph => {
+        const result = improveParagraph(paragraph, level, tone);
+        revisedParagraphs.push(result.text);
+        result.adjustments.forEach(item => allAdjustments.push(item));
+      });
+
+      const revised = revisedParagraphs.join('\n\n');
+      revisedText.textContent = revised;
+
+      const uniqueAdjustments = [...new Set(allAdjustments)];
+      adjustmentsList.innerHTML = uniqueAdjustments.length
+        ? uniqueAdjustments.map(item => `<div class="list-item">${item}</div>`).join('')
+        : '<div class="list-item">Nenhum ajuste relevante além de revisão leve.</div>';
+
+      feedbackList.innerHTML = feedback.map(item => `<div class="list-item">${item}</div>`).join('');
+      statusText.textContent = `Análise concluída para ${docType.toLowerCase()}, com intervenção ${level}.`;
+    }
+
+    analyzeBtn.addEventListener('click', analyzeText);
+
+    clearBtn.addEventListener('click', () => {
+      inputText.value = '';
+      revisedText.textContent = 'Sua versão revisada vai aparecer aqui.';
+      feedbackList.innerHTML = '<div class="list-item">Nenhum feedback ainda.</div>';
+      adjustmentsList.innerHTML = '<div class="list-item">Os ajustes realizados aparecerão aqui.</div>';
+      statusText.textContent = 'Cole um texto e clique em “Analisar e melhorar”.';
+      clarityScore.textContent = '—';
+      formalityScore.textContent = '—';
+      cohesionScore.textContent = '—';
+      overallScore.textContent = '—';
+    });
+
+    copyRevisedBtn.addEventListener('click', async () => {
+      const content = revisedText.textContent.trim();
+      if (!content || content === 'Sua versão revisada vai aparecer aqui.') return;
+      await navigator.clipboard.writeText(content);
+      copyRevisedBtn.textContent = 'Copiado';
+      setTimeout(() => copyRevisedBtn.textContent = 'Copiar versão revisada', 1200);
+    });
+
+    document.querySelectorAll('.tab-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+        document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+        btn.classList.add('active');
+        document.getElementById(`tab-${btn.dataset.tab}`).classList.add('active');
+      });
+    });
+
+    renderPatterns();
+  </script>
+</body>
+</html>
